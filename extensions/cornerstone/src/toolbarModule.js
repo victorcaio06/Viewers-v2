@@ -26,6 +26,7 @@ const TOOLBAR_BUTTON_TYPES = {
 const TOOLBAR_BUTTON_BEHAVIORS = {
   CINE: 'CINE',
   DOWNLOAD_SCREEN_SHOT: 'DOWNLOAD_SCREEN_SHOT',
+  SEND_SCREEN_SHOT: 'SEND_SCREEN_SHOT',
 };
 
 /* TODO: Export enums through a extension manager. */
@@ -223,6 +224,17 @@ const definitions = [
         type: TOOLBAR_BUTTON_TYPES.BUILT_IN,
         options: {
           behavior: TOOLBAR_BUTTON_BEHAVIORS.DOWNLOAD_SCREEN_SHOT,
+          togglable: true,
+        },
+      },
+      {
+        id: 'KeyImage',
+        label: 'Key image',
+        icon: 'key-image-20',
+        //
+        type: TOOLBAR_BUTTON_TYPES.BUILT_IN,
+        options: {
+          behavior: TOOLBAR_BUTTON_BEHAVIORS.SEND_SCREEN_SHOT,
           togglable: true,
         },
       },

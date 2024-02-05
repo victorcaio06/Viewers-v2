@@ -23,6 +23,13 @@ const FILE_TYPE_OPTIONS = [
   },
 ];
 
+const FILE_TYPE_TO_SEND = [
+  {
+    key: 'png',
+    value: 'png',
+  },
+];
+
 const DEFAULT_FILENAME = 'image';
 const REFRESH_VIEWPORT_TIMEOUT = 1000;
 
@@ -39,11 +46,13 @@ const ViewportDownloadForm = ({
   minimumSize,
   maximumSize,
   canvasClass,
+  isSend,
 }) => {
   const [t] = useTranslation('ViewportDownloadForm');
 
   const [filename, setFilename] = useState(DEFAULT_FILENAME);
   const [fileType, setFileType] = useState('jpg');
+  const [fileTypeToSend, setFileTypeToSend] = useState('png');
 
   const [dimensions, setDimensions] = useState({
     width: defaultSize,
@@ -200,17 +209,17 @@ const ViewportDownloadForm = ({
       height: validSize(viewportElementHeight),
     }));
   }, [
+    loadImage,
     activeViewport,
     viewportElement,
-    showAnnotations,
-    loadImage,
+    dimensions.width,
+    dimensions.height,
     toggleAnnotations,
+    showAnnotations,
+    validSize,
     updateViewportPreview,
-    fileType,
     downloadCanvas.ref,
-    minimumSize,
-    maximumSize,
-    viewportElementDimensions,
+    fileType,
   ]);
 
   useEffect(() => {
@@ -242,6 +251,7 @@ const ViewportDownloadForm = ({
     downloadCanvas.ref,
     minimumSize,
     maximumSize,
+    loadAndUpdateViewports,
   ]);
 
   useEffect(() => {
@@ -254,6 +264,164 @@ const ViewportDownloadForm = ({
 
     setError({ ...hasError });
   }, [dimensions, filename, minimumSize]);
+
+  if (isSend) {
+    return (
+      <div className="ViewportDownloadForm">
+        <div className="title">{t('formTitle')}</div>
+
+        <div className="file-info-container" data-cy="file-info-container">
+          <div className="dimension-wrapper">
+            <div className="dimensions">
+              <div className="width">
+                <TextInput
+                  type="number"
+                  min={minimumSize}
+                  max={maximumSize}
+                  value={dimensions.width}
+                  label={t('imageWidth')}
+                  onChange={evt => onDimensionsChange(evt, 'width')}
+                  data-cy="image-width"
+                />
+                {renderErrorHandler('width')}
+              </div>
+              <div className="height">
+                <TextInput
+                  type="number"
+                  min={minimumSize}
+                  max={maximumSize}
+                  value={dimensions.height}
+                  label={t('imageHeight')}
+                  onChange={evt => onDimensionsChange(evt, 'height')}
+                  data-cy="image-height"
+                />
+                {renderErrorHandler('height')}
+              </div>
+            </div>
+            <div className="keep-aspect-wrapper">
+              <button
+                id="keep-aspect"
+                className={classnames(
+                  'form-button btn',
+                  keepAspect ? 'active' : ''
+                )}
+                data-cy="keep-aspect"
+                alt={t('keepAspectRatio')}
+                onClick={onKeepAspectToggle}
+              >
+                <Icon
+                  name={keepAspect ? 'link' : 'unlink'}
+                  alt={keepAspect ? 'Dismiss Aspect' : 'Keep Aspect'}
+                />
+              </button>
+            </div>
+          </div>
+
+          <div className="col">
+            <div className="file-name">
+              <TextInput
+                type="text"
+                data-cy="file-name"
+                value={filename}
+                onChange={event => setFilename(event.target.value)}
+                label={t('filename')}
+                id="file-name"
+              />
+              {renderErrorHandler('filename')}
+            </div>
+            <div className="file-type">
+              <Select
+                value={fileTypeToSend}
+                data-cy="file-type"
+                onChange={event => setFileTypeToSend(event.target.value)}
+                options={FILE_TYPE_TO_SEND}
+                label={t('fileType')}
+              />
+            </div>
+          </div>
+
+          <div className="col">
+            <div className="show-annotations">
+              <label htmlFor="show-annotations" className="form-check-label">
+                <input
+                  id="show-annotations"
+                  data-cy="show-annotations"
+                  type="checkbox"
+                  className="form-check-input"
+                  checked={showAnnotations}
+                  onChange={event => setShowAnnotations(event.target.checked)}
+                />
+                {t('showAnnotations')}
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style={{
+            height: viewportElementDimensions.height,
+            width: viewportElementDimensions.width,
+            position: 'absolute',
+            left: '9999px',
+          }}
+          ref={ref => setViewportElement(ref)}
+        >
+          <canvas
+            className={canvasClass}
+            style={{
+              height: downloadCanvas.height,
+              width: downloadCanvas.width,
+              display: 'block',
+            }}
+            width={downloadCanvas.width}
+            height={downloadCanvas.height}
+            ref={downloadCanvas.ref}
+          ></canvas>
+        </div>
+
+        {viewportPreview.src ? (
+          <div className="preview" data-cy="image-preview">
+            <div className="preview-header"> {t('imagePreview')}</div>
+            <img
+              className="viewport-preview"
+              src={viewportPreview.src}
+              alt={t('imagePreview')}
+              data-cy="image-preview"
+              data-cy="viewport-preview-img"
+            />
+          </div>
+        ) : (
+          <div className="loading-image">
+            <Icon name="circle-notch" className="icon-spin" />
+            {t('loadingPreview')}
+          </div>
+        )}
+
+        <div className="actions">
+          <div className="action-cancel">
+            <button
+              type="button"
+              data-cy="cancel-btn"
+              className="btn btn-danger"
+              onClick={onClose}
+            >
+              {t('Buttons:Cancel')}
+            </button>
+          </div>
+          <div className="action-save">
+            <button
+              disabled={hasError}
+              onClick={downloadImage}
+              className="btn btn-primary"
+              data-cy="download-btn"
+            >
+              {t('Buttons:Send')}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="ViewportDownloadForm">

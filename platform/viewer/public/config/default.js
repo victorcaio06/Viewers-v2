@@ -19,9 +19,12 @@ window.config = {
     dicomWeb: [
       {
         name: 'DCM4CHEE',
-        wadoUriRoot: 'https://d33do7qe4w26qo.cloudfront.net/dicomweb',
-        qidoRoot: 'https://d33do7qe4w26qo.cloudfront.net/dicomweb',
-        wadoRoot: 'https://d33do7qe4w26qo.cloudfront.net/dicomweb',
+        wadoUriRoot:
+          'http://msk-viewer.radcloud.com.br:8080/dcm4chee-arc/aets/DCM4CHEE/wado',
+        qidoRoot:
+          'http://msk-viewer.radcloud.com.br:8080/dcm4chee-arc/aets/DCM4CHEE/rs',
+        wadoRoot:
+          'http://msk-viewer.radcloud.com.br:8080/dcm4chee-arc/aets/DCM4CHEE/rs',
         qidoSupportsIncludeField: true,
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',

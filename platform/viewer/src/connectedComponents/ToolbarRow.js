@@ -414,6 +414,10 @@ function _handleBuiltIn(button) {
     commandsManager.runCommand('showDownloadViewportModal', {
       title: t('Download High Quality Image'),
     });
+  } else if (options.behavior === 'SEND_SCREEN_SHOT') {
+    commandsManager.runCommand('showSendViewportModal', {
+      title: t('Send High Quality Image'),
+    });
   }
 }
 

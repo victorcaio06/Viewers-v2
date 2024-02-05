@@ -11,6 +11,7 @@
   "Coronal": "Coronal",
   "Crosshairs": "Localizador",
   "Download": "Baixar",
+  "Send": "Enviar",
   "Ellipse": "Elipse",
   "Elliptical": "Elíptico",
   "Flip H": "Inverter H",
@@ -39,5 +40,6 @@
   "Stack Scroll": "Navegar Stacks",
   "Stop": "Parar",
   "Themes": "Temas",
-  "Zoom": "Zoom"
+  "Zoom": "Zoom",
+  "Key image": "Imagem chave"
 }

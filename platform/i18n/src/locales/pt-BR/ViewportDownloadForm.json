@@ -1,1 +1,15 @@
-{}
+{
+  "Send High Quality Image": "Enviar imagem de alta qualidade",
+  "emptyFilenameError": "O nome do arquivo não pode ficar vazio.",
+  "fileType": "Tipo de arquivo",
+  "filename": "Nome do arquivo",
+  "formTitle": "Especifique as dimensões, o nome do arquivo e o tipo desejado para a imagem de saída.",
+  "imageHeight": "Altura da imagem (px)",
+  "imagePreview": "Pré-visualização da imagem",
+  "imageWidth": "Largura da imagem (px)",
+  "keepAspectRatio": "Manter a proporção",
+  "loadingPreview": "Carregando visualização da imagem...",
+  "minHeightError": "A altura mínima válida é 100px.",
+  "minWidthError": "A largura mínima válida é 100px.",
+  "showAnnotations": "Mostrar anotações"
+}

@@ -39,6 +39,7 @@ import fastForward from './icons/fast-forward.svg';
 import stop from './icons/stop.svg';
 import info from './icons/info.svg';
 import inlineEdit from './icons/inline-edit.svg';
+import keyImage from './icons/key-fill-blue-20.svg';
 import level from './icons/level.svg';
 import link from './icons/link.svg';
 import linkCircles from './icons/link-circles.svg';
@@ -180,6 +181,7 @@ const ICONS = {
   liver,
   save: saveRegular,
   'envelope-square': envelopeSquare,
+  'key-image-20': keyImage,
 };
 
 /**

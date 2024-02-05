@@ -5,6 +5,7 @@ import OHIF from '@ohif/core';
 import setCornerstoneLayout from './utils/setCornerstoneLayout.js';
 import { getEnabledElement } from './state';
 import CornerstoneViewportDownloadForm from './CornerstoneViewportDownloadForm';
+import CornerstoneViewportSendForm from './CornerstoneViewportSendForm.js';
 const scroll = cornerstoneTools.import('util/scroll');
 
 const { studyMetadataManager } = OHIF.utils;
@@ -167,6 +168,21 @@ const commandsModule = ({ servicesManager }) => {
         });
       }
     },
+    showSendViewportModal: ({ title, viewports }) => {
+      const activeViewportIndex = viewports.activeViewportIndex;
+      const { UIModalService } = servicesManager.services;
+      if (UIModalService) {
+        UIModalService.show({
+          content: CornerstoneViewportSendForm,
+          title,
+          contentProps: {
+            activeViewportIndex,
+            onClose: UIModalService.hide,
+            servicesManager,
+          },
+        });
+      }
+    },
     updateTableWithNewMeasurementData({
       toolType,
       measurementNumber,
@@ -319,6 +335,11 @@ const commandsModule = ({ servicesManager }) => {
     },
     showDownloadViewportModal: {
       commandFn: actions.showDownloadViewportModal,
+      storeContexts: ['viewports'],
+      options: {},
+    },
+    showSendViewportModal: {
+      commandFn: actions.showSendViewportModal,
       storeContexts: ['viewports'],
       options: {},
     },
