@@ -20,11 +20,11 @@ window.config = {
       {
         name: 'DCM4CHEE',
         wadoUriRoot:
-          'http://msk-viewer.radcloud.com.br:8080/dcm4chee-arc/aets/DCM4CHEE/wado',
+          'https://mskdown.radcloud.com.br:8443/dcm4chee-arc/aets/DCM4CHEE/wado',
         qidoRoot:
-          'http://msk-viewer.radcloud.com.br:8080/dcm4chee-arc/aets/DCM4CHEE/rs',
+          'https://mskdown.radcloud.com.br:8443/dcm4chee-arc/aets/DCM4CHEE/rs',
         wadoRoot:
-          'http://msk-viewer.radcloud.com.br:8080/dcm4chee-arc/aets/DCM4CHEE/rs',
+          'https://mskdown.radcloud.com.br:8443/dcm4chee-arc/aets/DCM4CHEE/rs',
         qidoSupportsIncludeField: true,
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',

@@ -1,7 +1,7 @@
 import cornerstone from 'cornerstone-core';
 import cornerstoneTools from 'cornerstone-tools';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { utils } from '@ohif/core';
 import { ViewportDownloadForm } from '@ohif/ui';
@@ -18,6 +18,8 @@ const CornerstoneViewportSendForm = ({
   activeViewportIndex,
   servicesManager,
 }) => {
+  const [loading, setLoading] = useState(false);
+
   const activeEnabledElement = getEnabledElement(activeViewportIndex);
 
   const enableViewport = viewportElement => {
@@ -128,13 +130,17 @@ const CornerstoneViewportSendForm = ({
 
       document.body.appendChild(a);
 
-      const { title, message, type, autoClose } = await sendKeyImageToServer(
-        filename,
-        fileType,
-        a.href
-      );
+      const {
+        title,
+        message,
+        type,
+        autoClose,
+        isLoading,
+      } = await sendKeyImageToServer(filename, fileType, a.href);
 
       document.body.removeChild(a);
+
+      setLoading(isLoading);
 
       servicesManager.services.UIModalService.hide();
       servicesManager.services.UINotificationService.show({
@@ -160,6 +166,8 @@ const CornerstoneViewportSendForm = ({
       loadImage={loadImage}
       toggleAnnotations={toggleAnnotations}
       downloadBlob={downloadBlob}
+      isLoading={loading}
+      setLoading={setLoading}
       isSend
     />
   );

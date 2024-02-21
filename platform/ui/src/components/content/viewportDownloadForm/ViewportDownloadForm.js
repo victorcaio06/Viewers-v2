@@ -7,9 +7,11 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-
-import './ViewportDownloadForm.styl';
 import { TextInput, Select, Icon } from '@ohif/ui';
+
+import { ReactComponent as Loader } from '../../../elements/Svg/svgs/loading.svg';
+import styles from './LoadingSpinner.module.css';
+import './ViewportDownloadForm.styl';
 import classnames from 'classnames';
 
 const FILE_TYPE_OPTIONS = [
@@ -47,6 +49,8 @@ const ViewportDownloadForm = ({
   maximumSize,
   canvasClass,
   isSend,
+  isLoading,
+  setLoading,
 }) => {
   const [t] = useTranslation('ViewportDownloadForm');
 
@@ -96,6 +100,8 @@ const ViewportDownloadForm = ({
   const refreshViewport = useRef(null);
 
   const downloadImage = () => {
+    setLoading(true);
+
     downloadBlob(
       filename || DEFAULT_FILENAME,
       fileType,
@@ -410,12 +416,19 @@ const ViewportDownloadForm = ({
           </div>
           <div className="action-save">
             <button
-              disabled={hasError}
+              disabled={hasError || isLoading ? true : false}
               onClick={downloadImage}
-              className="btn btn-primary"
+              className="btn btn-primary quickTest"
               data-cy="download-btn"
             >
-              {t('Buttons:Send')}
+              {!isLoading ? (
+                t('Buttons:Send')
+              ) : (
+                <>
+                  <span>{t('Buttons:Send')}</span>
+                  <Loader style={{ marginLeft: '5px' }} className="spinner" />
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -594,6 +607,8 @@ ViewportDownloadForm.propTypes = {
   minimumSize: PropTypes.number.isRequired,
   maximumSize: PropTypes.number.isRequired,
   canvasClass: PropTypes.string.isRequired,
+  isSend: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 export default ViewportDownloadForm;
